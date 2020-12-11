@@ -1,9 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace SuperCaisse.Services.Tests.Class1
+namespace SuperCaisse.Services.Tests
 {
     public partial class Class1Test
     {
