@@ -8,12 +8,53 @@ namespace SuperCaisse.Services
 {
     public class StockOrderService
     {
-        // TODO Extract value as new class
-        public (Article[] articles, double totalPrice) AddStockOrder(params Article[] articles)
+        private List<StockOrder> _stockOrders = new List<StockOrder>();
+
+        public StockOrder AddStockOrder(
+            Provider provider,
+            Storekeeper backer,
+            IEnumerable<Article> articles
+        )
         {
-            return (
+            var stockOrder = new StockOrder(
+                Guid.NewGuid().ToString(),
+                provider,
+                backer,
                 articles,
-                articles.Sum(article => article.Price)
+                new OrderReport()
+            );
+
+            _stockOrders.Add(stockOrder);
+
+            return stockOrder;
+        }
+
+        public void SendStockOrder(string id)
+        {
+            var stockOrderToSend = GetStockOrder(id);
+            stockOrderToSend.Provider.SendMail(stockOrderToSend);
+            _stockOrders.Remove(stockOrderToSend);
+            stockOrderToSend.UpdateStatus(OrderReportStatus.Asked);
+            _stockOrders.Add(stockOrderToSend);
+        }
+
+        public StockOrder GetStockOrder(string id)
+        {
+            return _stockOrders.Find(
+                stockOrder => stockOrder.Id == id
+            );
+        }
+
+        public IEnumerable<StockOrder> GetAllStockOrders()
+        {
+            return _stockOrders;
+        }
+
+        public IEnumerable<StockOrder> GetInTransitStockOrders()
+        {
+            return _stockOrders.Where(
+                stockOrder => 
+                    stockOrder.Report.Status == OrderReportStatus.InTransit
             );
         }
     }

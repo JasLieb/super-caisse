@@ -1,45 +1,80 @@
 ﻿using SuperCaisse.Model;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace SuperCaisse.Services
 {
     public class AuthentificationService
     {
-        private User[] _users ;
+        private Employee[] _users ;
 
         public AuthentificationService()
         {
-            _users = new User[]
+            _users = new Employee[]
             {
-                new User("Mathieu","Pages","3","MatMatStock","brico2000clavy", UserRoles.Storekeeper),
-                new User("Lopez", "Cindy", "2", "123456", string.Empty, UserRoles.Cashier)
+                new Storekeeper(
+                    "Mathieu",
+                    "Dicaprio",
+                    "3",
+                    "MatMatStock",
+                    "brico2000clavy", 
+                    DateTime.Now, 
+                    new Details(
+                        "0666666666",
+                        "mathieu.dicaprio@brico2000.fr",
+                        "21 Baker street",
+                        "EC2P 2E",
+                        "London"
+                    )
+                ),
+                new Cashier(
+                    "Lopez", 
+                    "Cindy", 
+                    "2", 
+                    "123456",
+                    DateTime.Now,
+                    new Details(
+                        "077777777",
+                        "cindy.lopez@brico2000.fr",
+                        "75 rue de Paris",
+                        "75000",
+                        "Paris"
+                    )
+                )
             };
         }
 
-        public bool ConnectCashier(string codePin)
+        public Cashier ConnectCashier(string codePin)
         {
-            return _users
-                .Where(
-                    user => 
-                        user.Role == UserRoles.Cashier
-                        && user.Login == codePin
-                )
-                .Count() == 1;
-        }
-
-        public bool ConnectStorekeeper(string login, string password)
-        {
-            return _users
+            var userFound = _users
                 .Where(
                     user =>
-                        user.Role == UserRoles.Storekeeper
-                        && user.Login == login
-                        && user.Password == password
-                )
-                .Count() == 1;
+                        user is Cashier cashier
+                        && cashier.Login == codePin
+                );
+            if(userFound.Count() != 1)
+            {
+                throw new Exception("Cashier not found");
+            }
+            
+            return (Cashier) userFound.First();
+        }
+
+        public Storekeeper ConnectStorekeeper(string login, string password)
+        {
+            var userFound = _users
+                .Where(
+                    user =>
+                        user is Storekeeper storekeeper
+                        && storekeeper.Login == login
+                        && storekeeper.Password == password
+                );
+            if (userFound.Count() != 1)
+            {
+                throw new Exception("Storekeeper not found");
+            }
+
+            return (Storekeeper) userFound.First();
         }
     }
 }
