@@ -18,6 +18,18 @@ namespace SuperCaisse.Model
 
     public class Article
     {
+        public Article(
+            string name,
+            string barCode,
+            Categories category,
+            double price
+        )
+        {
+            Name = name;
+            BarCode = barCode;
+            Category = category;
+            Price = price;
+        }
         public string Name { get; set; }
         public string BarCode { get; set; }
         public Categories Category { get; set; }
