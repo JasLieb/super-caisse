@@ -2,8 +2,7 @@
 
 namespace SuperCaisse.Model
 {
-    public class Catalog
+    public class Catalog : ArticleContainer
     {
-        public IEnumerable<Article> Articles { get; }
     }
 }
