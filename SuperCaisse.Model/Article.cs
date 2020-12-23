@@ -4,7 +4,7 @@ using System.Text;
 
 namespace SuperCaisse.Model
 {
-    public enum Categories
+    public enum ArticleCategories
     {
         Garden,
         Bathroom,
@@ -20,7 +20,7 @@ namespace SuperCaisse.Model
     {
         public string Name { get; }
         public string BarCode { get; }
-        public Categories Category { get; }
+        public ArticleCategories Category { get; }
         public double Price { get; }
 
         // TODO : How to measure an article follow these dimensions or this weigth 
@@ -31,7 +31,7 @@ namespace SuperCaisse.Model
         public Article(
             string name,
             string barCode,
-            Categories category,
+            ArticleCategories category,
             double price
         )
         {

@@ -17,13 +17,13 @@ namespace SuperCaisse.Services
                 new Article(
                     "vis",
                     "0102030405",
-                    Categories.Tools,
+                    ArticleCategories.Tools,
                     1.25
                 ),
                 new Article(
                     "marteau",
                     "0203040506",
-                    Categories.Tools,
+                    ArticleCategories.Tools,
                     8.25
                 )
             };

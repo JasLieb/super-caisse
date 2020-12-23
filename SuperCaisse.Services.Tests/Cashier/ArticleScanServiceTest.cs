@@ -7,6 +7,7 @@ namespace SuperCaisse.Services.Tests
     [TestClass]
     public class ArticleScanServiceTest
     {
+        private AuthentificationService _authentificationService = new AuthentificationService();
         private ArticlesService _articlesService = new ArticlesService();
 
         [TestMethod]
@@ -14,15 +15,16 @@ namespace SuperCaisse.Services.Tests
         [DataRow("0203040506")]
         public void REQ_4_ScanArticle_KnownArticle(string barCode)
         {
-            var bracket = new Bracket();
+            var cashier = _authentificationService.ConnectCashier("123456");
+            var cashRegister = new CashRegister(cashier);
 
             var articles = _articlesService.GetArticles(barCode);
             Assert.IsTrue(articles.Count() > 0);
 
             var selectedArticle = articles.First();
-            bracket.AddArticle(selectedArticle);
+            cashRegister.AddArticle(selectedArticle);
 
-            Assert.AreEqual(selectedArticle.Price, bracket.GetTotalPrice());
+            Assert.AreEqual(selectedArticle.Price, cashRegister.Bracket.GetTotalPrice());
         }
 
         [TestMethod]
@@ -40,13 +42,15 @@ namespace SuperCaisse.Services.Tests
         [DataRow("marteau")]
         public void REQ_5_ArticleWithoutBarCode_KnownArticle(string query)
         {
-            var bracket = new Bracket();
+            var cashier = _authentificationService.ConnectCashier("123456");
+            var cashRegister = new CashRegister(cashier);
+
             var articles = _articlesService.Search(query);
             Assert.IsTrue(articles.Count() > 0);
 
             var selectedArticle = articles.First();
-            bracket.AddArticle(selectedArticle);
-            Assert.AreEqual(selectedArticle.Price, bracket.GetTotalPrice());
+            cashRegister.AddArticle(selectedArticle);
+            Assert.AreEqual(selectedArticle.Price, cashRegister.Bracket.GetTotalPrice());
         }
 
         [TestMethod]
