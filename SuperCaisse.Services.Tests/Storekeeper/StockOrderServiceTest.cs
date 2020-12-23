@@ -49,24 +49,6 @@ namespace SuperCaisse.Services.Tests
             Assert.AreEqual(OrderReportStatus.Asked, sendStockOrder.Report.Status);
         }
 
-        private StockOrder MakeStockOrder(Storekeeper storekeeper)
-        {
-            var provider = _providerService.GetProvider("BricoWorld");
-
-            var articles = new List<Article>();
-            articles.Add(ArticleConsts.Screwdriver);
-            articles.Add(ArticleConsts.Probe);
-            articles.Add(ArticleConsts.WoodenGardenChair);
-            articles.Add(ArticleConsts.RJ45Cable3Meters);
-
-            var stockOrder = _stockOrderService.AddStockOrder(
-                provider,
-                storekeeper,
-                articles
-            );
-            return stockOrder;
-        }
-
         [TestMethod]
         public void REQ_14_ReceiptAnOrder()
         {
@@ -83,6 +65,28 @@ namespace SuperCaisse.Services.Tests
                 string.Empty,
                 string.Empty
             );
+
+            var updatedOrderReceived = _stockOrderService.GetStockOrder(orderInTransit.Id);
+            Assert.AreEqual(OrderReportStatus.Delivered, updatedOrderReceived.Report.Status);
+            Assert.AreEqual(5, updatedOrderReceived.Report.Note);
+        }
+
+        private StockOrder MakeStockOrder(Storekeeper storekeeper)
+        {
+            var provider = _providerService.GetProvider("BricoWorld");
+
+            var articles = new List<Article>();
+            articles.Add(ArticleConsts.Screwdriver);
+            articles.Add(ArticleConsts.Probe);
+            articles.Add(ArticleConsts.WoodenGardenChair);
+            articles.Add(ArticleConsts.RJ45Cable3Meters);
+
+            var stockOrder = _stockOrderService.AddStockOrder(
+                provider,
+                storekeeper,
+                articles
+            );
+            return stockOrder;
         }
     }
 }

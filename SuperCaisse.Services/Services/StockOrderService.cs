@@ -96,7 +96,14 @@ namespace SuperCaisse.Services
             string photoFilePath
         )
         {
-            throw new NotImplementedException();
+            var deliveredStockOrder = GetStockOrder(id);
+            deliveredStockOrder.UpdateReport(
+                OrderReportStatus.Delivered,
+                DateTime.Now,
+                note,
+                comment,
+                photoFilePath
+            );
         }
     }
 }

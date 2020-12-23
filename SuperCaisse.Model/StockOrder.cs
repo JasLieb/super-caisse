@@ -32,13 +32,19 @@ namespace SuperCaisse.Model
 
         public void UpdateReport(
             OrderReportStatus? status = null, 
-            DateTime? deliveredDate = null
+            DateTime? deliveredDate = null,
+            int? note = null,
+            string comment = "",
+            string photoFilePath = ""
         )
         {
             Report = new OrderReport(
                 status ?? Report.Status,
                 Report.OrderDate,
-                deliveredDate ?? Report.DeliveryDate
+                deliveredDate ?? Report.DeliveryDate,
+                note ?? Report.Note,
+                comment ?? Report.Comment,
+                photoFilePath ?? Report.PhotoFilePath
             );
         }
     }
