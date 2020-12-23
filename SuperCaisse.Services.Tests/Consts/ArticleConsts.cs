@@ -1,9 +1,6 @@
 ﻿using SuperCaisse.Model;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace SuperCaisse.Services.Tests.Utils
+namespace SuperCaisse.Services.Tests
 {
     public class ArticleConsts
     {

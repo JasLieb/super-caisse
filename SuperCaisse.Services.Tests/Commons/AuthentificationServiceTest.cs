@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SuperCaisse.Services;
 using System;
 
 namespace SuperCaisse.Services.Tests
@@ -9,31 +10,31 @@ namespace SuperCaisse.Services.Tests
         private AuthentificationService _authentificationService = new AuthentificationService();
 
         [TestMethod]
-        public void ConnectCashier_RigthMatriculePassword()
+        public void REQ_2_ConnectCashier_RigthMatriculePassword()
         {
             var cashier = _authentificationService.ConnectCashier("123456");
             Assert.IsNotNull(cashier);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(Exception), "Cashier not found")]
-        public void ConnectCashier_WrongMatriculePassword()
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void REQ_2_ConnectCashier_WrongMatriculePassword()
         {
-            var cashier = _authentificationService.ConnectCashier("654321");
+            _authentificationService.ConnectCashier("654321");
         }
 
         [TestMethod]
-        public void ConnectStorekeeper_RigthMatriculePassword()
+        public void REQ_8_ConnectStorekeeper_RigthMatriculePassword()
         {
             var storekeeper = _authentificationService.ConnectStorekeeper("MatMatStock", "brico2000clavy");
             Assert.IsNotNull(storekeeper);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(Exception), "Storekeeper not found")]
-        public void ConnectStorekeeper_WrongMatriculePassword()
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void REQ_8_ConnectStorekeeper_WrongMatriculePassword()
         {
-            var storekeeper = _authentificationService.ConnectStorekeeper("-1", "654321");
+            _authentificationService.ConnectStorekeeper("-1", "654321");
         }
     }
 }
