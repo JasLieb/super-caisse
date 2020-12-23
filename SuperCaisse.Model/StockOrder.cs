@@ -11,7 +11,7 @@ namespace SuperCaisse.Model
         public Provider Provider { get; }
         public Storekeeper Backer { get; }
         public IEnumerable<Article> Articles { get; }
-        public OrderReport Report { get; }
+        public OrderReport Report { get; private set; }
 
         public StockOrder(
             string id,
@@ -30,9 +30,16 @@ namespace SuperCaisse.Model
 
         public double GetPrice() => Articles.Sum(article => article.Price);
 
-        public void UpdateStatus(OrderReportStatus status)
+        public void UpdateReport(
+            OrderReportStatus? status = null, 
+            DateTime? deliveredDate = null
+        )
         {
-
+            Report = new OrderReport(
+                status ?? Report.Status,
+                Report.OrderDate,
+                deliveredDate ?? Report.DeliveryDate
+            );
         }
     }
 }

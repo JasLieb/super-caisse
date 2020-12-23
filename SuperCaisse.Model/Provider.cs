@@ -14,7 +14,7 @@ namespace SuperCaisse.Model
 
         public void SendMail(StockOrder stockOrder)
         {
-            throw new NotImplementedException();
+            Console.WriteLine($"stockOrder {stockOrder.Id} was send to {Name}");
         }
     }
 }

@@ -16,6 +16,17 @@ namespace SuperCaisse.Model
     {
         public OrderReportStatus Status { get; }
         public DateTime OrderDate { get; }
-        public DateTime DeliveryDate { get; }
+        public DateTime? DeliveryDate { get; }
+
+        public OrderReport(
+            OrderReportStatus status, 
+            DateTime orderDate, 
+            DateTime? deliveryDate = null
+        )
+        {
+            Status = status;
+            OrderDate = orderDate;
+            DeliveryDate = deliveryDate;
+        }
     }
 }
