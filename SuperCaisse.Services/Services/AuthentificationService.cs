@@ -1,16 +1,18 @@
 ﻿using SuperCaisse.Model;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace SuperCaisse.Services
 {
     public class AuthentificationService
     {
-        private Employee[] _users ;
+        private IEnumerable<Employee> _employees;
+        private IList<Employee> _connectedEmployees = new List<Employee>();
 
         public AuthentificationService()
         {
-            _users = new Employee[]
+            _employees = new List<Employee>()
             {
                 new Storekeeper(
                     "Mathieu",
@@ -46,35 +48,45 @@ namespace SuperCaisse.Services
 
         public Cashier ConnectCashier(string codePin)
         {
-            var userFound = _users
+            var userFound = _employees
                 .Where(
                     user =>
                         user is Cashier cashier
                         && cashier.Login == codePin
                 );
-            if(userFound.Count() != 1)
-            {
-                throw new Exception("Cashier not found");
-            }
-            
-            return (Cashier) userFound.First();
+
+            var employee = userFound.First();
+            _connectedEmployees.Add(employee);
+
+            return (Cashier) employee;
         }
 
         public Storekeeper ConnectStorekeeper(string login, string password)
         {
-            var userFound = _users
+            var userFound = _employees
                 .Where(
                     user =>
                         user is Storekeeper storekeeper
                         && storekeeper.Login == login
                         && storekeeper.Password == password
                 );
-            if (userFound.Count() != 1)
-            {
-                throw new Exception("Storekeeper not found");
-            }
+
+            var employee = userFound.First();
+            _connectedEmployees.Add(employee);
 
             return (Storekeeper) userFound.First();
+        }
+
+        public bool DisconnectEmployee(string login)
+        {
+            var employeeFound =
+                _employees.Where(
+                    employee =>
+                        employee.Login == login
+                )
+                .First();
+
+            return _connectedEmployees.Remove(employeeFound);
         }
     }
 }
