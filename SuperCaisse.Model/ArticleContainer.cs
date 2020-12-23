@@ -7,10 +7,12 @@ namespace SuperCaisse.Model
 {
     public abstract class ArticleContainer
     {
-        protected IList<Article> Articles { get; }
+        public Guid Id { get; }
+        public IList<Article> Articles { get; }
 
         protected ArticleContainer()
         {
+            Id = Guid.NewGuid();
             Articles = new List<Article>();
         }
 
