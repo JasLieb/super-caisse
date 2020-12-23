@@ -4,40 +4,16 @@ namespace SuperCaisse.Services.Tests
 {
     public class ArticleConsts
     {
-        public static Article Screwdriver => 
-            new Article()
-            {
-                BarCode = "01010",
-                Category = Categories.Tools,
-                Name = "Tournevis",
-                Price = 14.99
-            };
+        public static Article Screwdriver =>
+            new Article("Tournevis", "01010", Categories.Tools, 14.99);
 
         public static Article Probe =>
-            new Article()
-            {
-                BarCode = "10101",
-                Category = Categories.Tools,
-                Name = "Sonde",
-                Price = 49.99
-            };
+            new Article("Sonde", "10101", Categories.Tools, 49.99);
 
         public static Article WoodenGardenChair =>
-            new Article()
-            {
-                BarCode = "11111",
-                Category = Categories.Garden,
-                Name = "Chaise en bois de jardin",
-                Price = 25
-            };
+            new Article("Chaise en bois de jardin", "11111", Categories.Garden, 25);
 
         public static Article RJ45Cable3Meters =>
-            new Article()
-            {
-                BarCode = "11001",
-                Category = Categories.Electronic,
-                Name = "Cable RJ45 3m",
-                Price = 7.50
-            };
+            new Article("Cable RJ45 3m", "11001", Categories.Electronic, 7.5);
     }
 }

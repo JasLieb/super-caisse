@@ -18,19 +18,27 @@ namespace SuperCaisse.Model
 
     public class Article
     {
-        public string Name { get; set; }
-        public string BarCode { get; set; }
-        public Categories Category { get; set; }
-        public double Price { get; set; }
+        public string Name { get; }
+        public string BarCode { get; }
+        public Categories Category { get; }
+        public double Price { get; }
 
         // TODO : How to measure an article follow these dimensions or this weigth 
-        // public float Weigth { get; set; }
-        // public float Size { get; set; }
-        // public float Other { get; set; }
+        // public float Weigth { get; }
+        // public float Size { get; }
+        // public float Other { get; }
 
-        public string GetBarCode()
+        public Article(
+            string name,
+            string barCode,
+            Categories category,
+            double price
+        )
         {
-            return BarCode;
+            Name = name;
+            BarCode = barCode;
+            Category = category;
+            Price = price;
         }
     }
 }
