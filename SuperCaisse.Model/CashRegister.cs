@@ -86,7 +86,7 @@ namespace SuperCaisse.Model
             // Send to the receipt printer
         }
 
-        public void PrintBill(object bill)
+        public void PrintBill(string bill)
         {
             // Send to the bill printer
         }
