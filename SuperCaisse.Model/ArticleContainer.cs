@@ -15,12 +15,5 @@ namespace SuperCaisse.Model
             Id = Guid.NewGuid();
             Articles = new List<Article>();
         }
-
-        public double GetTotalPrice()
-        {
-            return Articles.Sum(
-                article => article.Price
-            );
-        }
     }
 }
