@@ -82,7 +82,7 @@ namespace SuperCaisse.Services.Tests
 
             Assert.IsTrue(webSession.CanCompleteTransaction);
             webSession.CompleteTransaction();
-            var orders = webSession.GetSelectedShop().Proxy.GetClickAndCollectOrder();
+            var orders = webSession.GetSelectedShop().GetClickAndCollectOrder();
             Assert.AreEqual(1, orders.Count());
         }
 
@@ -106,7 +106,7 @@ namespace SuperCaisse.Services.Tests
             
             webSession.CompleteTransaction();
 
-            var orders = webSession.GetSelectedShop().Proxy.GetClickAndCollectOrder();
+            var orders = webSession.GetSelectedShop().GetClickAndCollectOrder();
             Assert.AreEqual(1, orders.Count());
         }
 

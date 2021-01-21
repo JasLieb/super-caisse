@@ -1,5 +1,6 @@
 ﻿
 using SuperCaisse.Model;
+using System;
 
 namespace SuperCaisse.Services
 {
@@ -8,7 +9,7 @@ namespace SuperCaisse.Services
         public string Id { get; }
         public Address Address { get; }
         public ClickNCollectService ClickNCollectService { get; }
-        public ShopToWebProxyService Proxy { get; }
+        private ShopToWebProxyService Proxy { get; }
 
         public Shop(
             string id, 
@@ -21,6 +22,16 @@ namespace SuperCaisse.Services
             Address = address;
             ClickNCollectService = clickNCollectService;
             Proxy = shopToWebProxyService;
+        }
+
+        public void SendNewClickNCollect(WebOrder webOrder)
+        {
+            Proxy.SendNewClickNCollect(webOrder);
+        }
+
+        public object GetClickAndCollectOrder()
+        {
+            Proxy.GetClickAndCollectOrder();
         }
     }
 }
