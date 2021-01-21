@@ -72,7 +72,11 @@ namespace SuperCaisse.Services
             SelectedIdShopClickNCollectId = id;
         }
 
-        public bool PayWtihBC(string BCId, string BCDateExpiration, string BCCryptogram)
+        public bool PayWtihBC(
+            string BCId, 
+            string BCDateExpiration, 
+            string BCCryptogram
+        )
         {
             // TODO BC payement check with banks
             Bracket.AddTransaction(TransactionType.BC, GetRemainsDependent());
