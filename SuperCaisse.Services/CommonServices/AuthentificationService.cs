@@ -7,21 +7,22 @@ namespace SuperCaisse.Services
 {
     public class AuthentificationService
     {
-        private IEnumerable<Employee> _employees;
-        private IList<Employee> _connectedEmployees = new List<Employee>();
+        protected PersonFactory _personFactory = new PersonFactory();
+        protected IEnumerable<Employee> _employees;
+        protected IList<Employee> _connectedEmployees = new List<Employee>();
 
         public AuthentificationService()
         {
             _employees = new List<Employee>()
             {
-                new Storekeeper(
+                _personFactory.MakeStorekeeper(
                     "Mathieu",
                     "Dicaprio",
                     "3",
                     "MatMatStock",
-                    "brico2000clavy", 
-                    DateTime.Now, 
-                    new Details(
+                    "brico2000clavy",
+                    DateTime.Now,
+                    _personFactory.MakeDetails(
                         "0666666666",
                         "mathieu.dicaprio@brico2000.fr",
                         "21 Baker street",
@@ -29,10 +30,10 @@ namespace SuperCaisse.Services
                         "London"
                     )
                 ),
-                new Cashier(
-                    "Lopez", 
-                    "Cindy", 
-                    "2", 
+                _personFactory.MakeCashier(
+                    "Lopez",
+                    "Cindy",
+                    "2",
                     "123456",
                     DateTime.Now,
                     new Details(

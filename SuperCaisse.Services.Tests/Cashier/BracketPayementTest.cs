@@ -26,7 +26,6 @@ namespace SuperCaisse.Services.Tests
             cashRegister.AddArticle(secondSelectedArticle);
 
             var bracketTotalPrice = firstSelectedArticle.Price + secondSelectedArticle.Price;
-            //Assert.AreEqual(bracketTotalPrice, cashRegister.GetRemainsDependent());
             
             cashRegister.PayWithCash(50);
             Assert.IsFalse(cashRegister.CanCompleteTransaction);

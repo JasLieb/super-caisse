@@ -5,14 +5,31 @@ using System.Linq;
 
 namespace SuperCaisse.Services
 {
-    public class WebAuthentificationService
+    public class WebAuthentificationService : AuthentificationService
     {
-        private PersonFactory _personFactory = new PersonFactory();
         private IList<Customer> _customers;
         private IList<Customer> _connectedCustomers = new List<Customer>();
 
         public WebAuthentificationService()
         {
+            _employees = new List<Employee>()
+            {
+                _personFactory.MakeStorekeeper(
+                    "Quentin",
+                    "Tarantino",
+                    "4",
+                    "MatParisStock",
+                    "entrepotfantome",
+                    DateTime.Now,
+                    _personFactory.MakeDetails(
+                        "0777777777",
+                        "quentin.tarantino@brico2000.fr",
+                        "21 Hollywood Boulveard",
+                        "90028",
+                        "Los Angeles"
+                    )
+                )
+            };
             _customers = new List<Customer>()
             {
                 _personFactory.MakeCustomer(

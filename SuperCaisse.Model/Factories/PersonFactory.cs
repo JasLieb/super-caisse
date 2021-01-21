@@ -1,4 +1,6 @@
-﻿namespace SuperCaisse.Model
+﻿using System;
+
+namespace SuperCaisse.Model
 {
     public class PersonFactory
     {
@@ -30,6 +32,46 @@
                 physicalAddress,
                 zipCode,
                 city
+            );
+        }
+
+        public Storekeeper MakeStorekeeper(
+            string firstName,
+            string lastName,
+            string matricule,
+            string login,
+            string password,
+            DateTime startDate,
+            Details details
+        )
+        {
+            return new Storekeeper(
+                firstName,
+                lastName,
+                matricule,
+                login,
+                password,
+                startDate,
+                details
+            );
+        }
+
+        public Cashier MakeCashier(
+            string firstName,
+            string lastName,
+            string matricule,
+            string login,
+            DateTime startDate,
+            Details details
+        )
+        {
+            return new Cashier(
+                firstName,
+                lastName,
+                matricule,
+                login,
+                startDate,
+                details
             );
         }
     }
