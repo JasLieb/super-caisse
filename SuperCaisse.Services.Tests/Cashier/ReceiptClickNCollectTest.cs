@@ -26,7 +26,7 @@ namespace SuperCaisse.Services.Tests
 
             Thread.Sleep(1000); // Some time later
 
-            var webOrder = shop.ClickNCollectService.FindWebOrder("Already").First();
+            var webOrder = shop.ClickNCollectService.FindWebOrders("Already").First();
 
             var cashier = _authentificationService.ConnectCashier("123456");
             var cashRegister = new CashRegister(cashier);
@@ -49,7 +49,7 @@ namespace SuperCaisse.Services.Tests
 
             Thread.Sleep(1000); // Some time later
 
-            var webOrder = shop.ClickNCollectService.FindWebOrder("Already").First();
+            var webOrder = shop.ClickNCollectService.FindWebOrders("Already").First();
 
             var cashier = _authentificationService.ConnectCashier("123456");
             var cashRegister = new CashRegister(cashier);

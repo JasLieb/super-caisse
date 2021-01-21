@@ -14,12 +14,12 @@ namespace SuperCaisse.Services
             _webOrders.Add(webOrder);
         }
 
-        internal IEnumerable<WebOrder> GetWebOrders()
+        public IEnumerable<WebOrder> GetWebOrders()
         {
             return _webOrders;
         }
 
-        public IEnumerable<WebOrder> FindWebOrder(string customerName)
+        public IEnumerable<WebOrder> FindWebOrders(string customerName)
         {
             return _webOrders.Where(
                 webOrder => webOrder.Customer.Name.Contains(customerName)
