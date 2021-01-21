@@ -9,11 +9,12 @@ namespace SuperCaisse.Services.Tests
     [TestClass]
     public class CustomerConnectionTest
     {
+        private WebAuthentificationService _webAuthentificationService = new WebAuthentificationService();
+
         [TestMethod]
         public void REQ_16_RegisterNewCustomer()
         {
-            var webSite = new WebSite();
-            var customer = webSite.MakeCustomer(
+            var customer = _webAuthentificationService.AddCustomer(
                 "Johnny B. Good",
                 "0666066600",
                 "johnny.b.good@berry.com",
@@ -24,7 +25,7 @@ namespace SuperCaisse.Services.Tests
             );
             Assert.IsNotNull(customer);
             customer.SendMailRegistrationSuccessed();
-            var connectedCustomer = webSite.ConnectCustomer(
+            var connectedCustomer = _webAuthentificationService.ConnectCustomer(
                 customer.Details.MailAddress,
                 customer.Password
             );
@@ -34,8 +35,7 @@ namespace SuperCaisse.Services.Tests
         [TestMethod]
         public void REQ_16_ConnectCustomer()
         {
-            var webSite = new WebSite();
-            var customer = webSite.ConnectCustomer(
+            var customer = _webAuthentificationService.ConnectCustomer(
                 "already@registered.com",
                 "notfunnypassword"
             );
@@ -46,8 +46,7 @@ namespace SuperCaisse.Services.Tests
         [ExpectedException(typeof(InvalidOperationException))]
         public void REQ_16_ConnectCustomer_WrongIdentifiants()
         {
-            var webSite = new WebSite();
-            var customer = webSite.ConnectCustomer(
+            _webAuthentificationService.ConnectCustomer(
                 "already@registered.com",
                 "notfunnypasswordw"
             );
@@ -56,13 +55,12 @@ namespace SuperCaisse.Services.Tests
         [TestMethod]
         public void REQ_16_DisconnectConnectCustomer()
         {
-            var webSite = new WebSite();
-            var customer = webSite.ConnectCustomer(
+            var customer = _webAuthentificationService.ConnectCustomer(
                 "already@registered.com",
                 "notfunnypassword"
             );
             Assert.IsNotNull(customer);
-            var isDisconnect = webSite.DisconnectCustomer("already@registered.com");
+            var isDisconnect = _webAuthentificationService.DisconnectCustomer("already@registered.com");
             Assert.IsTrue(isDisconnect);
         }
 
@@ -70,8 +68,7 @@ namespace SuperCaisse.Services.Tests
         [ExpectedException(typeof(InvalidOperationException))]
         public void REQ_16_DisconnectConnectCustomer_NotConnectedCustomer()
         {
-            var webSite = new WebSite();
-            var isDisconnected = webSite.DisconnectCustomer("a");
+            _webAuthentificationService.DisconnectCustomer("a");
         }
     }
 }
