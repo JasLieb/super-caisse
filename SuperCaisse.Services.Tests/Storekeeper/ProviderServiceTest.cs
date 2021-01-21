@@ -18,13 +18,12 @@ namespace SuperCaisse.Services.Tests
             _authentificationService.ConnectStorekeeper("MatMatStock", "brico2000clavy");
             var newProvider = _providerService.AddProvider(
                 "Courage",
-                new Details(
-                    "0606060606",
-                    "Courage@Courage.com",
-                    "Middle of",
-                    "666",
-                    "Nowhere"
-                ),
+                "0606060606",
+                "Courage@Courage.com",
+                "Middle of",
+                "666",
+                "Nowhere"
+                ,
                 new Catalog()
             );
 

@@ -7,7 +7,6 @@ namespace SuperCaisse.Services
 {
     public class WebSession : SalesDevice
     {
-        private PersonFactory _personFactory = new PersonFactory();
         private ShopInfosService _shopInfosService = new ShopInfosService();
         private WebOrderService _webOrderService = new WebOrderService();
 
@@ -31,9 +30,9 @@ namespace SuperCaisse.Services
             string city
         )
         {
-            return _personFactory.MakeCustomer(
+            return PersonFactory.MakeCustomer(
                 name,
-                _personFactory.MakeDetails(
+                PersonFactory.MakeDetails(
                     phoneNumber,
                     mail,
                     physicalAddress,

@@ -7,7 +7,6 @@ namespace SuperCaisse.Services
 {
     public class AuthentificationService
     {
-        protected PersonFactory _personFactory = new PersonFactory();
         protected IEnumerable<Employee> _employees;
         protected IList<Employee> _connectedEmployees = new List<Employee>();
 
@@ -15,14 +14,14 @@ namespace SuperCaisse.Services
         {
             _employees = new List<Employee>()
             {
-                _personFactory.MakeStorekeeper(
+                PersonFactory.MakeStorekeeper(
                     "Mathieu",
                     "Dicaprio",
                     "3",
                     "MatMatStock",
                     "brico2000clavy",
                     DateTime.Now,
-                    _personFactory.MakeDetails(
+                    PersonFactory.MakeDetails(
                         "0666666666",
                         "mathieu.dicaprio@brico2000.fr",
                         "21 Baker street",
@@ -30,7 +29,7 @@ namespace SuperCaisse.Services
                         "London"
                     )
                 ),
-                _personFactory.MakeCashier(
+                PersonFactory.MakeCashier(
                     "Lopez",
                     "Cindy",
                     "2",

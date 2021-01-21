@@ -2,14 +2,13 @@
 
 namespace SuperCaisse.Model
 {
-    public class PersonFactory
+    public static class PersonFactory
     {
-        public PersonFactory()
-        {
-
-        }
-
-        public Customer MakeCustomer(string name, Details details, string password)
+        public static Customer MakeCustomer(
+            string name, 
+            Details details, 
+            string password
+        )
         {
             return new Customer(
                 name,
@@ -18,7 +17,7 @@ namespace SuperCaisse.Model
             );
         }
 
-        public Details MakeDetails(
+        public static Details MakeDetails(
             string phoneNumber,
             string mailAddress,
             string physicalAddress,
@@ -35,7 +34,20 @@ namespace SuperCaisse.Model
             );
         }
 
-        public Storekeeper MakeStorekeeper(
+        public static Provider MakeProvider(
+            string name, 
+            Details details, 
+            Catalog catalog
+        )
+        {
+            return new Provider(
+                name,
+                details,
+                catalog
+            );
+        }
+
+        public static Storekeeper MakeStorekeeper(
             string firstName,
             string lastName,
             string matricule,
@@ -56,7 +68,7 @@ namespace SuperCaisse.Model
             );
         }
 
-        public Cashier MakeCashier(
+        public static Cashier MakeCashier(
             string firstName,
             string lastName,
             string matricule,

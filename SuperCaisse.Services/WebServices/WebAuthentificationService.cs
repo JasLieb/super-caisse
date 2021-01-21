@@ -14,14 +14,14 @@ namespace SuperCaisse.Services
         {
             _employees = new List<Employee>()
             {
-                _personFactory.MakeStorekeeper(
+                PersonFactory.MakeStorekeeper(
                     "Quentin",
                     "Tarantino",
                     "4",
                     "MatParisStock",
                     "entrepotfantome",
                     DateTime.Now,
-                    _personFactory.MakeDetails(
+                    PersonFactory.MakeDetails(
                         "0777777777",
                         "quentin.tarantino@brico2000.fr",
                         "21 Hollywood Boulveard",
@@ -32,7 +32,7 @@ namespace SuperCaisse.Services
             };
             _customers = new List<Customer>()
             {
-                _personFactory.MakeCustomer(
+                PersonFactory.MakeCustomer(
                     "Already",
                     new Details(
                         "0604050405",
@@ -85,9 +85,9 @@ namespace SuperCaisse.Services
             string password
         )
         {
-            var customer = _personFactory.MakeCustomer(
+            var customer = PersonFactory.MakeCustomer(
                 name,
-                _personFactory.MakeDetails(
+                PersonFactory.MakeDetails(
                     phoneNumber,
                     mail,
                     physicalAddress,
