@@ -1,26 +1,18 @@
-﻿using System;
+﻿using SuperCaisse.Model;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace SuperCaisse.Model
+namespace SuperCaisse.Services
 {
-    public class CashRegister
+    public class CashRegister : SalesDevice
     {
         public Cashier Cashier { get; }
-        public Bracket Bracket { get; private set; }
-        public bool IsCompletedTransaction => GetRemainsDependent() == 0;
+        public WebOrder WebOrder { get; private set; }
 
         public CashRegister(Cashier cashier)
         {
             Cashier = cashier;
-        }
-
-        public void AddArticle(Article selectedArticle)
-        {
-            if (Bracket == null)
-                Bracket = new Bracket();
-
-            Bracket.AddArticle(selectedArticle);
         }
 
         public Bracket MakeBracketMemento()
@@ -36,11 +28,6 @@ namespace SuperCaisse.Model
                 throw new InvalidOperationException();
 
             Bracket = savedBracket;
-        }
-
-        public double GetRemainsDependent()
-        {
-            return Bracket.GetTotalPrice() - Bracket.GetTotalPaid();
         }
 
         public void PayWithCash(double amount)
@@ -64,21 +51,25 @@ namespace SuperCaisse.Model
             Bracket.AddTransaction(TransactionType.BC, amount);
         }
 
+        public void ReceiptWebOrder(WebOrder webOrder)
+        {
+            RestoreBracket(webOrder.Bracket);
+        }
+
+        public void CompleteTransaction()
+        {
+            if(GetRemainsDependent() != 0)
+            {
+                throw new InvalidOperationException();
+            }
+
+            Bracket = null;
+            WebOrder = null;
+        }
+
         public void PayWithCheck(double amount)
         {
             Bracket.AddTransaction(TransactionType.Check, amount);
-        }
-
-        public string GetReceipt()
-        {
-            var receiptBuilder = new ReceiptBuilder();
-            return receiptBuilder.Build(Bracket);
-    }
-
-        public string GetBill()
-        {
-            var billBuilder = new BillBuilder();
-            return billBuilder.Build(Bracket);
         }
 
         public void PrintReceipt(string receipt)
@@ -89,6 +80,20 @@ namespace SuperCaisse.Model
         public void PrintBill(string bill)
         {
             // Send to the bill printer
+        }
+
+        // These methods could be as private but in the need or the exercice
+        // We have ignored an isolated test for theses builders
+        public string GetReceipt()
+        {
+            var receiptBuilder = new ReceiptBuilder();
+            return receiptBuilder.Build(Bracket);
+        }
+
+        public string GetBill()
+        {
+            var billBuilder = new BillBuilder();
+            return billBuilder.Build(Bracket);
         }
     }
 }
