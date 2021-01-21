@@ -63,8 +63,15 @@ namespace SuperCaisse.Services.Tests
             var availablesShops = _shopsService.GetShops();
             Assert.AreEqual(2, availablesShops.Count());
 
-            webSession.SetClickNCollectDeliveryMode();
+            var selectedShop = availablesShops.First(
+                shop => shop.Address.City == "Balma"
+            );
+
+            webSession.SetClickNCollectDeliveryMode(selectedShop.Id);
             Assert.AreEqual(DeliveryMode.ClickCollect, webSession.SelectedDeliveryMode);
+            Assert.AreEqual(DeliveryMode.ClickCollect, webSession.SelectedDeliveryMode);
+            Assert.AreEqual(selectedShop.Id, webSession.GetSelectedShop().Id);
+            Assert.IsFalse(webSession.CanCompleteTransaction);
             Assert.IsTrue(
                 webSession.PayWtihBC(
                     "4545-5555-5555-5555",
@@ -72,8 +79,11 @@ namespace SuperCaisse.Services.Tests
                     "111"
                 )
             );
+
             Assert.IsTrue(webSession.CanCompleteTransaction);
             webSession.CompleteTransaction();
+            var orders = webSession.GetSelectedShop().Proxy.GetClickAndCollectOrder();
+            Assert.AreEqual(1, orders.Count());
         }
 
         [TestMethod]
@@ -91,8 +101,13 @@ namespace SuperCaisse.Services.Tests
             webSession.SetClickCollectPaymentInShopDeliveryMode(selectedShop.Id);
 
             Assert.AreEqual(DeliveryMode.ClickCollectPaymentInShop, webSession.SelectedDeliveryMode);
+            Assert.AreEqual(selectedShop.Id, webSession.GetSelectedShop().Id);
             Assert.IsTrue(webSession.CanCompleteTransaction);
+            
             webSession.CompleteTransaction();
+
+            var orders = webSession.GetSelectedShop().Proxy.GetClickAndCollectOrder();
+            Assert.AreEqual(1, orders.Count());
         }
 
         private WebSession MakeWebConnectedSession()

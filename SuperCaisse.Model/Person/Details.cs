@@ -1,6 +1,6 @@
 ﻿namespace SuperCaisse.Model
 {
-    public class Details
+    public class Details 
     {
         public Details(
             string phoneNumber, 
@@ -12,15 +12,15 @@
         {
             PhoneNumber = phoneNumber;
             MailAddress = mailAddress;
-            PhysicalAddress = physicalAddress;
-            ZipCode = zipCode;
-            City = city;
+            PhysicalAddress = new Address(
+                physicalAddress,
+                zipCode,
+                city
+            );
         }
 
         public string PhoneNumber { get; }
         public string MailAddress { get; }
-        public string PhysicalAddress { get; }
-        public string ZipCode { get; }
-        public string City { get; }
+        public Address PhysicalAddress { get; }
     }
 }
