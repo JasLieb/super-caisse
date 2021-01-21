@@ -8,6 +8,12 @@ namespace SuperCaisse.Services
 {
     public class ShopInfosService
     {
+        // This service or the way it was implemented now is a "joker"
+        // It is meaning in the future, this service will not contains any Shop reference
+        // Ask through a DB loading mechanism, a ShopInfo object with only an Id, an Address and a Proxy handler
+        // In the context of the exercise, this choce of implementation was taken
+
+        // Only for ShopInfosService creation
         private ClickNCollectService _clickNCollectServiceToulouse = new ClickNCollectService();
         private ClickNCollectService _clickNCollectServiceBalma = new ClickNCollectService();
         

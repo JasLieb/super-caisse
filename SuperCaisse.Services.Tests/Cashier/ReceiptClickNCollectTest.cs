@@ -21,7 +21,7 @@ namespace SuperCaisse.Services.Tests
         {
             // This method return the shop used from the web part 
             // In the future the Shop must be itself initilazed with DB data loading mechanism
-            // In fact, for the exercice, this last element is ignored
+            // In fact, for the exercise, this last element is ignored
             var shop = MakeClickNCollectOrderAlreadyPaid();
 
             Thread.Sleep(1000); // Some time later
@@ -44,7 +44,7 @@ namespace SuperCaisse.Services.Tests
         {
             // This method return the shop used from the web part 
             // In the future the Shop must be itself initilazed with DB data loading mechanism
-            // In fact, for the exercice, this last element is ignored
+            // In fact, for the exercise, this last element is ignored
             var shop = MakeClickNCollectOrderNotAlreadyPaid();
 
             Thread.Sleep(1000); // Some time later

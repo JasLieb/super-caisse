@@ -67,7 +67,7 @@ namespace SuperCaisse.Services
             // Send to the bill printer
         }
 
-        // These methods could be as private but in the need or the exercice
+        // These methods could be as private but in the need or the exercise
         // We have ignored an isolated test for theses builders
         public string GetReceipt()
         {

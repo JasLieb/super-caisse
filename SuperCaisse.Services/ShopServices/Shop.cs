@@ -1,6 +1,7 @@
 ﻿
 using SuperCaisse.Model;
 using System;
+using System.Collections.Generic;
 
 namespace SuperCaisse.Services
 {
@@ -29,9 +30,9 @@ namespace SuperCaisse.Services
             Proxy.SendNewClickNCollect(webOrder);
         }
 
-        public object GetClickAndCollectOrder()
+        public IEnumerable<WebOrder> GetClickAndCollectOrder()
         {
-            Proxy.GetClickAndCollectOrder();
+            return Proxy.GetClickAndCollectOrder();
         }
     }
 }

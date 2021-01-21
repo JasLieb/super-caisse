@@ -12,7 +12,7 @@ namespace SuperCaisse.Services
             WebOrder webOrder
         )
         {
-            shop.Proxy.SendNewClickNCollect(
+            shop.SendNewClickNCollect(
                 webOrder
             );
         }
