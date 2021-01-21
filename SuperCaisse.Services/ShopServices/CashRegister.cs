@@ -15,21 +15,6 @@ namespace SuperCaisse.Services
             Cashier = cashier;
         }
 
-        public Bracket MakeBracketMemento()
-        {
-            var bracketMemento = Bracket;
-            Bracket = null;
-            return bracketMemento;
-        }
-
-        public void RestoreBracket(Bracket savedBracket)
-        {
-            if (Bracket != null)
-                throw new InvalidOperationException();
-
-            Bracket = savedBracket;
-        }
-
         public void PayWithCash(double amount)
         {
             var remainAmount = GetRemainsDependent();
