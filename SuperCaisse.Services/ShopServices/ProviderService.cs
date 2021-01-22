@@ -14,7 +14,7 @@ namespace SuperCaisse.Services
         {
             _providers = new List<Provider>()
             {
-                new Provider(
+                PersonFactory.MakeProvider(
                     "BricoWorld",
                     new Details(
                         "0235353535",
@@ -25,7 +25,7 @@ namespace SuperCaisse.Services
                     ),
                     new Catalog()
                 ),
-                new Provider(
+                PersonFactory.MakeProvider(
                     "H.P.L.", 
                     new Details(
                         "0666666666", 
@@ -49,16 +49,27 @@ namespace SuperCaisse.Services
         }
 
         public Provider AddProvider(
-            string name, 
-            Details details, 
+            string name,
+            string phoneNumber,
+            string mailAddress,
+            string physicalAddress,
+            string zipCode,
+            string city,
             Catalog catalog
         )
         {
             var newProvider = new Provider(
                 name,
-                details,
+                PersonFactory.MakeDetails(
+                    phoneNumber,
+                    mailAddress,
+                    physicalAddress,
+                    zipCode,
+                    city
+                ),
                 catalog
             );
+            
 
             _providers.Add(newProvider);
 

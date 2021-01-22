@@ -26,15 +26,14 @@ namespace SuperCaisse.Services.Tests
             cashRegister.AddArticle(secondSelectedArticle);
 
             var bracketTotalPrice = firstSelectedArticle.Price + secondSelectedArticle.Price;
-            //Assert.AreEqual(bracketTotalPrice, cashRegister.GetRemainsDependent());
             
             cashRegister.PayWithCash(50);
-            Assert.IsFalse(cashRegister.IsCompletedTransaction);
+            Assert.IsFalse(cashRegister.CanCompleteTransaction);
 
             Assert.AreEqual(bracketTotalPrice - 50, cashRegister.GetRemainsDependent());
             cashRegister.GiveBackChange(40.5);
             
-            Assert.IsTrue(cashRegister.IsCompletedTransaction);
+            Assert.IsTrue(cashRegister.CanCompleteTransaction);
             Assert.AreEqual(0, cashRegister.GetRemainsDependent());
             Assert.AreEqual(2, cashRegister.Bracket.Transactions.Count());
             
@@ -45,6 +44,11 @@ namespace SuperCaisse.Services.Tests
             var secondTransaction = cashRegister.Bracket.Transactions.ElementAt(1);
             Assert.AreEqual(40.5, secondTransaction.Amount);
             Assert.AreEqual(TransactionType.CashChange, secondTransaction.Type);
+
+
+            cashRegister.CompleteTransaction();
+            Assert.IsNull(cashRegister.Bracket);
+            Assert.IsNull(cashRegister.WebOrder);
         }
 
         [TestMethod]
@@ -63,13 +67,17 @@ namespace SuperCaisse.Services.Tests
             Assert.AreEqual(bracketTotalPrice, cashRegister.GetRemainsDependent());
 
             cashRegister.PayWithBC(bracketTotalPrice);
-            Assert.IsTrue(cashRegister.IsCompletedTransaction);
+            Assert.IsTrue(cashRegister.CanCompleteTransaction);
             Assert.AreEqual(0, cashRegister.GetRemainsDependent());
             Assert.AreEqual(1, cashRegister.Bracket.Transactions.Count());
 
             var firstTransaction = cashRegister.Bracket.Transactions.ElementAt(0);
             Assert.AreEqual(bracketTotalPrice, firstTransaction.Amount);
             Assert.AreEqual(TransactionType.BC, firstTransaction.Type);
+
+            cashRegister.CompleteTransaction();
+            Assert.IsNull(cashRegister.Bracket);
+            Assert.IsNull(cashRegister.WebOrder);
         }
 
         [TestMethod]
@@ -88,13 +96,17 @@ namespace SuperCaisse.Services.Tests
             Assert.AreEqual(bracketTotalPrice, cashRegister.GetRemainsDependent());
 
             cashRegister.PayWithCheck(bracketTotalPrice);
-            Assert.IsTrue(cashRegister.IsCompletedTransaction);
+            Assert.IsTrue(cashRegister.CanCompleteTransaction);
             Assert.AreEqual(0, cashRegister.GetRemainsDependent());
             Assert.AreEqual(1, cashRegister.Bracket.Transactions.Count());
 
             var firstTransaction = cashRegister.Bracket.Transactions.ElementAt(0);
             Assert.AreEqual(bracketTotalPrice, firstTransaction.Amount);
             Assert.AreEqual(TransactionType.Check, firstTransaction.Type);
+
+            cashRegister.CompleteTransaction();
+            Assert.IsNull(cashRegister.Bracket);
+            Assert.IsNull(cashRegister.WebOrder);
         }
 
         [TestMethod]
@@ -116,11 +128,11 @@ namespace SuperCaisse.Services.Tests
             double checkAmount = 7.5;
             
             cashRegister.PayWithCash(cashAmount);
-            Assert.IsFalse(cashRegister.IsCompletedTransaction);
+            Assert.IsFalse(cashRegister.CanCompleteTransaction);
             Assert.AreEqual(bracketTotalPrice - cashAmount, cashRegister.GetRemainsDependent());
 
             cashRegister.PayWithCheck(checkAmount);
-            Assert.IsTrue(cashRegister.IsCompletedTransaction);
+            Assert.IsTrue(cashRegister.CanCompleteTransaction);
             Assert.AreEqual(0, cashRegister.GetRemainsDependent());
             Assert.AreEqual(2, cashRegister.Bracket.Transactions.Count());
 
@@ -131,6 +143,10 @@ namespace SuperCaisse.Services.Tests
             var secondTransaction = cashRegister.Bracket.Transactions.ElementAt(1);
             Assert.AreEqual(checkAmount, secondTransaction.Amount);
             Assert.AreEqual(TransactionType.Check, secondTransaction.Type);
+
+            cashRegister.CompleteTransaction();
+            Assert.IsNull(cashRegister.Bracket);
+            Assert.IsNull(cashRegister.WebOrder);
         }
 
         [TestMethod]
@@ -152,11 +168,11 @@ namespace SuperCaisse.Services.Tests
             double bcAmount = 7.5;
 
             cashRegister.PayWithCash(cashAmount);
-            Assert.IsFalse(cashRegister.IsCompletedTransaction);
+            Assert.IsFalse(cashRegister.CanCompleteTransaction);
             Assert.AreEqual(bracketTotalPrice - cashAmount, cashRegister.GetRemainsDependent());
 
             cashRegister.PayWithBC(bcAmount);
-            Assert.IsTrue(cashRegister.IsCompletedTransaction);
+            Assert.IsTrue(cashRegister.CanCompleteTransaction);
             Assert.AreEqual(0, cashRegister.GetRemainsDependent());
 
             Assert.AreEqual(2, cashRegister.Bracket.Transactions.Count());
@@ -168,6 +184,10 @@ namespace SuperCaisse.Services.Tests
             var secondTransaction = cashRegister.Bracket.Transactions.ElementAt(1);
             Assert.AreEqual(bcAmount, secondTransaction.Amount);
             Assert.AreEqual(TransactionType.BC, secondTransaction.Type);
+
+            cashRegister.CompleteTransaction();
+            Assert.IsNull(cashRegister.Bracket);
+            Assert.IsNull(cashRegister.WebOrder);
         }
 
         [TestMethod]
@@ -189,11 +209,11 @@ namespace SuperCaisse.Services.Tests
             double checkAmount = 7.5;
 
             cashRegister.PayWithBC(bcAmount);
-            Assert.IsFalse(cashRegister.IsCompletedTransaction);
+            Assert.IsFalse(cashRegister.CanCompleteTransaction);
             Assert.AreEqual(bracketTotalPrice - bcAmount, cashRegister.GetRemainsDependent());
 
             cashRegister.PayWithCheck(checkAmount);
-            Assert.IsTrue(cashRegister.IsCompletedTransaction);
+            Assert.IsTrue(cashRegister.CanCompleteTransaction);
             Assert.AreEqual(0, cashRegister.GetRemainsDependent());
 
             Assert.AreEqual(2, cashRegister.Bracket.Transactions.Count());
@@ -205,6 +225,10 @@ namespace SuperCaisse.Services.Tests
             var secondTransaction = cashRegister.Bracket.Transactions.ElementAt(1);
             Assert.AreEqual(checkAmount, secondTransaction.Amount);
             Assert.AreEqual(TransactionType.Check, secondTransaction.Type);
+
+            cashRegister.CompleteTransaction();
+            Assert.IsNull(cashRegister.Bracket);
+            Assert.IsNull(cashRegister.WebOrder);
         }
 
         [TestMethod]
@@ -222,7 +246,7 @@ namespace SuperCaisse.Services.Tests
             var bracketTotalPrice = firstSelectedArticle.Price + secondSelectedArticle.Price;
             cashRegister.PayWithCash(bracketTotalPrice);
 
-            Assert.IsTrue(cashRegister.IsCompletedTransaction);
+            Assert.IsTrue(cashRegister.CanCompleteTransaction);
 
             var receipt = cashRegister.GetReceipt();
             Assert.IsTrue(receipt.Contains("Receipt"));
@@ -239,6 +263,10 @@ namespace SuperCaisse.Services.Tests
             Assert.IsTrue(bill.Contains($"Cash : {bracketTotalPrice}€"));
             Assert.IsTrue(bill.Contains("Change : 0€"));
             cashRegister.PrintBill(bill);
+
+            cashRegister.CompleteTransaction();
+            Assert.IsNull(cashRegister.Bracket);
+            Assert.IsNull(cashRegister.WebOrder);
         }
     }
 }
